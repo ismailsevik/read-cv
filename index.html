@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read.cv - Posts</title>
+    <meta name="theme-color" content="#df2e38"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000;
+            --text-muted: #636363;
+            --text-ghost: #a1a1a1;
+            --border: #f2f2f2;
+            --font: "Inter", -apple-system, sans-serif;
+            --brand:#df2e38;
+            --bg-color: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --border-color: #efefef;
+            --transition-speed: 0.6s;
+            --transition-curve: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+      
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        
+      
+    
+   
+   svg {
+       background: transparent;
+       fill:none;
+       
+   }
+   
+   
+        
+
+        /* Navbar */
+        nav {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: 600; font-size: 15px; letter-spacing: -0.02em; }
+        .nav-links { display: flex; gap: 24px; font-size: 14px; font-weight: 500; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); transition: color 0.2s; }
+        .nav-links a.active { color: var(--text-main); }
+
+        /* Posts Container */
+        .posts-feed {
+            max-width: 600px; /* Read.cv post genişliği */
+            margin: 60px auto;
+            padding: 0 20px;
+            
+        }
+
+        .feed-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+        }
+
+        /* Post Item */
+        .post {
+            position:relative;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 48px;
+            margin-bottom: 48px;
+            padding:15px;
+            border: 1px solid var(--border);
+            border-radius:20px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .user-avatar {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            background:none;
+        }
+
+        .post-timestamp {
+            font-size: 14px;
+            color: var(--text-ghost);
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            word-spacing: -0.01em;
+        }
+
+        .post-media {
+            width: 100%;
+            border-radius: 4px; /* Read.cv'de köşeler çok az yuvarlaktır */
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .post-media img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Post Actions (Ultra minimal) */
+        .post-actions {
+            display: flex;  
+            align-items:center;
+            flex-wrap:wrap; 
+            gap: 20%;
+            margin-top:10px;
+            padding-top:15px;
+            border-top:1px solid #efefef;
+        }
+    
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 0;
+        }
+
+        .action-btn:hover {
+            color: var(--text-main);
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 1.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        
+        .profile-link {
+            position:absolute;
+            background:var(--brand);
+            right:20px;   
+           color: #fff;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 500; 
+            border: 1px solid #efefef;
+            cursor: pointer;
+            text-decoration:none;
+        }
+        
+          .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 40px auto 100px;
+            padding: 30px 20px;
+            border-top: 1px solid #eee;
+            z-index:0;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #111;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--brand);
+        }
+
+        /* Hover durumunda küçük bir alt çizgi animasyonu */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--brand);
+            transition: 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.disabled {
+            color: #ccc;
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .nav-link.disabled::after {
+            display: none;
+        }
+        
+        
+        
+     <!---------- HAMBURGER MENÜ----------‐-->
+        
+        
+        ripple-dot {
+            position: relative;
+            width: 12px;
+            height: 12px;
+            background-color: var(--brand); /* Nokta rengi */
+            border-radius: 50%;
+            
+        }
+
+        /* Yayılan Halkalar (Damlacık Efekti) */
+        .ripple-dot::before,
+        .ripple-dot::after {
+            content: "";
+            position: absolute;
+           top: 0; 
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--brand);
+            border-radius: 50%;
+            opacity: 0;
+            animation: ripple 2s infinite ease-out;
+            
+        }
+
+        /* İkinci halka için kısa bir gecikme ekliyoruz */
+        .ripple-dot::after {
+            animation-delay: 1s;
+        }
+
+        /* Animasyon Tanımı */
+        @keyframes ripple {
+            0% {
+                width: 12px;
+                height: 12px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 90px;
+                height: 90px;
+                opacity: 0;
+            }
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+  
+<div class="head">
+   <div class="ripple-dot"></div>
+   
+</div>
+
+
+
+    <main class="posts-feed">
+    
+     <article class="post">
+        <div class="post-header">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYscJOivz7u8y6JACuLIZaQ0_Hvsq2BelHHKht3KTnyEP-zRtUURkPstg6re6n2saik49Mxni4alOHp3cBL0nffL8DePbPs9eaHxgTB0efDTRQ-fESc01Hbn6n1Onz9mmHpozdJPlbkJ9JMQZOTbrXk4ZECTJFfXYi0j3VgPLIh98LWSs/s1600/profil.jpg" class="user-avatar">
+                <span class="user-name">İsmail Şevik <svg  style="fill:none; stroke:var(--kizil);width:14px;height:14px;font-weight:900" viewBox="0 0 24 24">
+  <path d="m8.5 12.5 2 2 5-5m4.3 5.7a1 1 0 0 0 0-6.4 1 1 0 0 0-4.6-4.6 1 1 0 0 0-6.4 0 1 1 0 0 0-4.6 4.6 1 1 0 0 0 0 6.4 1 1 0 0 0 4.6 4.6 1 1 0 0 0 6.4 0 1 1 0 0 0 4.6-4.6Z"></path>
+</svg></span>
+                
+ <a href="#profil" class="profile-link">
+                    
+     Takip Et</a>
+                
+            </div>
+            <div class="post-content">
+                Gönül, Dilan seni seviyorum. Senin saflığın beni bitiriyor. 
+            </div>
+            
+<div class="post-actions">
+    
+                <!-- YORUM İKONU -->
+<button class="action-btn">
+<svg viewBox='0 0 24 24'><path d='M22 10V13C22 17 20 19 16 19H15.5C15.19 19 14.89 19.15 14.7 19.4L13.2 21.4C12.54 22.28 11.46 22.28 10.8 21.4L9.3 19.4C9.14 19.18 8.77 19 8.5 19H8C4 19 2 18 2 13V8C2 4 4 2 8 2H14'/><path d='M19.5 7C20.8807 7 22 5.88071 22 4.5C22 3.11929 20.8807 2 19.5 2C18.1193 2 17 3.11929 17 4.5C17 5.88071 18.1193 7 19.5 7Z'/></svg>
+                    97
+</button>
+
+              <!-- RETWEET İKONU -->
+
+                <button class="action-btn">
+                  
+  <svg  viewBox="0 0 24 24">
+  <path d="M21.5 9a10 10 0 0 0-19 0M2 5v4h4m12 6h4v4M2.5 15a10 10 0 0 0 19 0"></path>
+</svg>
+                    
+                </button>
+                
+                
+                <!-- TAKVİM İKONU -->
+                <button class="action-btn">
+               <svg  viewBox='0 0 24 24'><g transform='translate(2.749800, 2.050100)'><path d='M-1.0658141e-14,10.7255 C-1.0658141e-14,3.7695 2.319,1.4515 9.274,1.4515 C16.23,1.4515 18.549,3.7695 18.549,10.7255 C18.549,17.6815 16.23,19.9995 9.274,19.9995 C2.319,19.9995 -1.0658141e-14,17.6815 -1.0658141e-14,10.7255 Z'/><line x1='0.2754' x2='18.2834' y1='7.2739' y2='7.2739'/><line x1='13.2832' x2='13.2832' y1='2.84217094e-14' y2='3.262'/><line x1='5.2749' x2='5.2749' y1='2.84217094e-14' y2='3.262'/></g></svg>
+                 
+                  4 Şubat 2026
+                </button>
+                
+            </div>
+
+        </article>
+    
+    <!------------- SONRAKİ GÖNDERI-------‐-->
+    
+    
+    </main>
+    <nav class="post-navigation">
+        <a href="#" class="nav-link">Yeni Yazılar</a>
+        <a href="#" class="nav-link">Eski Yazılar</a>
+    </nav>
+
+
+
+
+
+    <footer style="padding: 100px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-ghost); font-size: 13px;">
+        © 2026 Read.cv Experience
+        İsmail Şevik tarafından ♡ yapıldı.
+        
+    </footer>
+    
+</body>
+</html>
